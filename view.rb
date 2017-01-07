@@ -18,11 +18,12 @@ class BasicView
   def red text
     "\e[31;40m#{text}\e[0m"
 end
+end
 
 class FileDialogView < BasicView
 
   def display
-    puts "Select an Apache log file"
+    puts red(center"Select an Apache log file"))
   end
 end
 
