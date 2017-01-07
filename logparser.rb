@@ -4,5 +4,3 @@ require './controller.rb'
 
 @controller = LogParserController.new
 @controller.run
-
-

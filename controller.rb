@@ -5,7 +5,7 @@ class LogParserController
     @current_view = FileDialogView.new
     @current_view.clear_display
     @current_view.set_cursor
-    @current_view.display
+    @current_view.display @log_file
   end
 
   def run
@@ -26,34 +26,24 @@ class LogParserController
         parse_input user_input
       end
     end
-
-  def parse_input user_input
-  when "\n"
-    #change controller likely
-    #check the view's current interaction
-    #index to see what's next_chars
-  when "\e[A" #up button
-    #up button .. update the view with an up action
-  when "\e[B" #down button
-    #down
-  when "\e[C"
-    #right
-  when "\e[D"
-    #left
-  else
-    #send other input to a select input field
   end
-end
 
-
-
-
-
-class FileDialogView
-  def quittable
-    true
-  end
-end
-
-
+    def parse_input user_input
+      case user_input
+        when "\n"
+          #change controller likely
+          #check the view's current interaction
+          #index to see what's next_chars
+        when "\e[A" #up button
+          #up button .. update the view with an up action
+        when "\e[B" #down button
+          #down
+        when "\e[C"
+          #right
+        when "\e[D"
+          #left
+        else
+          #send other input to a select input field
+        end
+      end
 end
