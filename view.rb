@@ -14,6 +14,9 @@ class BasicView
     column_locaion = columns /2 -text_length /2
     "\e[#{column_locaion}G#{text}"
   end
+
+  def red text
+    "\e[31;40m#{text}\e[0m"
 end
 
 class FileDialogView < BasicView
