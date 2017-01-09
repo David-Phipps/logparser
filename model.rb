@@ -18,6 +18,30 @@ class LogFile
         false
       end
     end
+
+    def select_directory_or_load_file
+      if cd(@file_path + @directory.entries[@directory_index] + "/")
+        :directory
+      else
+        if load_file
+          :file
+        end
+      end
+    end
+
+    def load_file
+      if File.file?(@file_path +
+        @directory.entries[@directory_index])
+        @file_name = @directory.entries[@directory_index]
+        @log_entries = IO.readlines(@file_path + @file_name)
+        @log_entry_index = 0
+        @list_start = 0
+        true
+      else
+        false
+      end
+    end
+
   end
 
 class LogEntry

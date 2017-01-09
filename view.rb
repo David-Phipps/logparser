@@ -55,7 +55,7 @@ class FileDialogView < BasicView
       end
 
       directory_entry = directory_entry + "/" if Dir.exist?(log_file.file_path +
-        directory_entry)
+      directory_entry)
       directory_entry = red(directory_entry) if index ==
         log_file.directory_index
 
@@ -70,6 +70,39 @@ end
 
 
 class LogListView < BasicView
+
+  def quittable?
+    true
+  end
+
+  def display log_file
+    clear_display
+    set_cursor
+    print red(center(log_file.file_name)) + "\n"
+    update log_file
+  end
+
+  def update log_file
+    set_cursor 2,1
+    log_file.log_entries.each_with_index do |entry, index|
+
+      if index < log_file.list_start
+        next
+      end
+
+      if index > log_file.list_start + $stdin.winsize[0] - 3
+        break
+      end
+      entry = entry.chomp.gsub("\t", "    ").slice(0,
+      $stdin.winsize[1])
+      entry = red(entry) if index == log_file.log_entry_index
+      print "\e[K" + entry + "\n"
+    end
+
+    print "\e[J"
+    set_cursor $stdin.winsize[0], 1
+    print red("Type 'q' to exit, up/down to move, 's' to sort or filter");
+  end
 end
 
 class SortFilterView < BasicView
