@@ -54,7 +54,7 @@ class LogParserController
     @log_file.log_entry_index += increment
     if @log_file.log_entry_index < @log_file.list_start
       @log_file.list_start = @log_file.log_entry_index -
-      $stedin.winsize[0] +3
+      $stdin.winsize[0] +3
     elsif @log_file.log_entry_index > @log_file.list_start +
       $stdin.winsize[0] -3
       @log_file.list_start = @log_file.log_entry_index

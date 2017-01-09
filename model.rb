@@ -45,4 +45,11 @@ class LogFile
   end
 
 class LogEntry
+
+  def parse_row row
+    regex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(\S*)(\S*)\[(\d\d)\/([^\/]*)
+    \/(\d{4}):(\d\d):(\d\d):(\d\d)[\+-]\d{4}\]"([^"]*)""([^"]*)"/
+
+    regex.match row
+  end
 end
