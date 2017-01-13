@@ -102,6 +102,23 @@ class LogListView < BasicView
     print "\e[J"
     set_cursor $stdin.winsize[0], 1
     print red("Type 'q' to exit, up/down to move, 's' to sort or filter");
+
+    total_columns = $stdout.winsize[1] - 28
+    # (space after ip address, response code and file size)
+    text_column_size = total_columns / 3
+    row = "\e[K" + entry.ip_address +
+    "\e[17G" + entry.ip_address.slice(0,text_column_size) +
+    "\e[#{text_column_size + 17 +1}G" + entry.response_code +
+    "\e[#{text_column_size + 17 +1 +4}G" + entry.http_referer.slice(0,
+    text_column_size) +
+    "\e[#{2 * text_column_size + 17 + 2 + 4}G" + entry.user_agent.slice(0,
+    text_column_size) +
+    "\e[#{3 * text_column_size + 17 + 3 + 4}G" + entry.file_size.slice(0,7) +
+    "\n"
+
+    row = red(row) if index == log_file.log_entry_index
+    print row
+
   end
 end
 
