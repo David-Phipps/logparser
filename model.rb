@@ -31,12 +31,12 @@ class LogFile
     end
 
     def load_file
-      if File.file?(@file_path +
-        @directory.entries[@directory_index])
+      if File.file?(@file_path + @directory.entries[@directory_index])
         @file_name = @directory.entries[@directory_index]
         log_array = IO.readlines(@file_path + @file_name)
         log_array.each_with_index do |log, index|
           @log_entries[index] = LogEntry.new log
+          #binding.pry
         end
         @log_entry_index = 0
         @list_start = 0
@@ -55,8 +55,9 @@ class LogEntry
 
   def initialize row = nil
     if row
-      row.gsub! /\t/,"     "
+      #row.gsub! /\t/,"     "
       match_data = parse_row row
+
       set_properties match_data
     end
   end
@@ -68,13 +69,12 @@ class LogEntry
     @file_size = match_data[12]
     @http_referer = match_data[13]
     @user_agent = match_data[14]
+    #binding.pry
   end
 
   def parse_row row
-    regex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(\S*)(\S*)\[(\d\d)\/([^\/]*)
-    \/(\d{4}):(\d\d):(\d\d):(\d\d)[\+-]\d{4}\]"([^"]*)"(\d+)(\d+)“([^”]*)”
-    ”([^”]*)”/
-
+    regex = /(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}) (\S*) (\S*) \[(\d\d)\/([^\/]*)\/(\d{4}):(\d\d):(\d\d):(\d\d) [\+-]\d{4}\] "([^"]*)" (\S+) (\S+) "([^"]*)" "([^"]*)"/
     regex.match row
+    #binding.pry
   end
 end
