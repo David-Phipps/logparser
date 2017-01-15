@@ -94,11 +94,12 @@ class LogListView < BasicView
         break
       end
 
-      total_columns = $stdout.winsize[1] - 28
+      total_columns = $stdout.winsize[1] - 44
       # (space after ip address, response code and file size)
       text_column_size = total_columns / 3
-      row = "\e[K" + entry.ip_address +
-      "\e[17G" + entry.request.slice(0,text_column_size) +
+      row = "\e[K" + entry.time_stamp.strftime("%m-%d %H:%M:%S") +
+      "\e[16G" + entry.ip_address +
+      "\e[#{17 + 16}G" + entry.request.slice(0,text_column_size) +
       "\e[#{text_column_size + 17 +1}G" + entry.response_code +
       "\e[#{text_column_size + 17 +1 +4}G" + entry.http_referer.slice(0,
       text_column_size) +

@@ -2,11 +2,22 @@ class LogFile
 
   attr_accessor :file_name, :file_path, :log_entries, :directory,
   :directory_index, :log_entry_index, :list_start
-
+  ######################################
+  # Setup the object ...
+  # make sure @log_entrires is an
+  # Array
+  ######################################
     def initialize
-      cd "/"
+      cd "./"
       @log_entries = Array.new
     end
+
+#########################################
+# change directory of LogFile
+# object, to path if possible
+# If not, return false
+#########################################
+
 
     def cd path
       if Dir.exist?(path)
@@ -69,6 +80,8 @@ class LogEntry
     @file_size = match_data[12]
     @http_referer = match_data[13]
     @user_agent = match_data[14]
+    @time_stamp = Time.gm match_data[6],match_data[5], match_data[4],
+    match_data[7], match_data[8], match_data[9]
     #binding.pry
   end
 
